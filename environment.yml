@@ -6,7 +6,6 @@ channels:
 dependencies:
   - python
   - conda-build
-  - nb_conda_kernels
   - libgdal
   - geopandas
   - rasterio
@@ -43,7 +42,6 @@ dependencies:
   - pandocfilters
   - nbconvert
   - jupyterlab
-  - nb_conda
   - jupyter
   - nbformat
   - pandoc
