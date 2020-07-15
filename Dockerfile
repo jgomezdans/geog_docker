@@ -32,6 +32,8 @@ ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
 # if you want this environment to be the default one, uncomment the following line:
 ENV CONDA_DEFAULT_ENV ${conda_env}
 
+USER root
+
 RUN jupyter serverextension enable --py jupyter_http_over_ws
 
 RUN jupyter contrib nbextension install --user
@@ -46,11 +48,16 @@ RUN jupyter nbextension install --py nbgrader --overwrite
 RUN jupyter nbextension enable --py nbgrader
 RUN jupyter serverextension enable --py nbgrader
 
+
 # Add jupyterlab extensions here (some might need installing via conda/pip)
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter labextension install jupyter-leaflet
 
+USER $NB_USER
+
 # Trust notebooks in repo
 RUN jupyter trust *.ipynb
 RUN jupyter trust notebooks/*.ipynb
+
+
