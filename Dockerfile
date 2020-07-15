@@ -34,14 +34,13 @@ ENV CONDA_DEFAULT_ENV ${conda_env}
 
 USER root
 
-RUN jupyter serverextension enable --py jupyter_http_over_ws
+# RUN jupyter serverextension enable --py jupyter_http_over_ws
 
 RUN jupyter contrib nbextension install --user
 RUN jupyter nbextension enable --py widgetsnbextension
 RUN jupyter nbextension enable rubberband/main
 RUN jupyter nbextension enable exercise2/main
 RUN jupyter nbextension enable collapsible_headings/main
-RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 
 
