@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+#    - name: Build the Docker image
+#      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Login to DockerHub Registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Get the version
+      id: vars
+      run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+    - name: Build the tagged Docker image
+      run: docker build . --file Dockerfile --tag jgomezdans/geog:${{steps.vars.outputs.tag}}
+      
+
