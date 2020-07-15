@@ -55,14 +55,8 @@ RUN jupyter nbextension enable toggle_all_line_numbers/main
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN jupyter labextension install nbdime-jupyterlab --no-build && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
-    jupyter labextension install jupyterlab_bokeh --no-build && \
-    jupyter labextension install jupyterlab-kernelspy --no-build && \
-    jupyter labextension install jupyterlab-chart-editor --no-build && \
-    jupyter labextension install @jupyterlab/latex --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
-    jupyter labextension install jupyterlab-drawio --no-build && \
     jupyter labextension install jupyter-leaflet --no-build && \
-    jupyter labextension install qgrid --no-build && \
     jupyter lab build && \
         jupyter lab clean && \
         jlpm cache clean && \
