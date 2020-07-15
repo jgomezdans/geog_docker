@@ -4,9 +4,7 @@ channels:
   - defaults
   - anaconda
 dependencies:
-  - conda
   - python
-  - anaconda-client
   - conda-build
   - nb_conda_kernels
   - libgdal
@@ -62,7 +60,6 @@ dependencies:
   - sphinx
   - ipykernel
   - importlib_metadata
-  - nbgrader
   - pip
   - pip:
     - jupyter_http_over_ws
