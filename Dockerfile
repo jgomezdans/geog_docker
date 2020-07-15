@@ -46,7 +46,6 @@ RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 RUN jupyter nbextension install --py nbgrader --overwrite
 RUN jupyter nbextension enable --py nbgrader
-RUN jupyter serverextension enable --py nbgrader
 
 
 # Add jupyterlab extensions here (some might need installing via conda/pip)
