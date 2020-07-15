@@ -24,10 +24,33 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
     fix-permissions /home/$NB_USER
 
 # any additional pip installs can be added by uncommenting the following line
-# RUN $CONDA_DIR/envs/${conda_env}/bin/pip install 
+RUN $CONDA_DIR/envs/${conda_env}/bin/pip install nbgrader
 
 # prepend conda environment to path
 ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
 
 # if you want this environment to be the default one, uncomment the following line:
 ENV CONDA_DEFAULT_ENV ${conda_env}
+
+RUN jupyter serverextension enable --py jupyter_http_over_ws
+
+RUN jupyter contrib nbextension install --user
+RUN jupyter nbextension enable --py widgetsnbextension
+RUN jupyter nbextension enable rubberband/main
+RUN jupyter nbextension enable exercise2/main
+RUN jupyter nbextension enable collapsible_headings/main
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+
+
+RUN jupyter nbextension install --py nbgrader --overwrite
+RUN jupyter nbextension enable --py nbgrader
+RUN jupyter serverextension enable --py nbgrader
+
+# Add jupyterlab extensions here (some might need installing via conda/pip)
+
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN jupyter labextension install jupyter-leaflet
+
+# Trust notebooks in repo
+RUN jupyter trust *.ipynb
+RUN jupyter trust notebooks/*.ipynb
