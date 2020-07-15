@@ -24,7 +24,7 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
     fix-permissions /home/$NB_USER
 
 # any additional pip installs can be added by uncommenting the following line
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install nbgrader
+# RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
 
 # prepend conda environment to path
 ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
@@ -32,22 +32,51 @@ ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
 # if you want this environment to be the default one, uncomment the following line:
 ENV CONDA_DEFAULT_ENV ${conda_env}
 
-USER root
-
-# RUN jupyter serverextension enable --py jupyter_http_over_ws
-
+RUN python -m pip install jupyterthemes
+RUN python -m pip install --upgrade jupyterthemes
+RUN python -m pip install jupyter_contrib_nbextensions
 RUN jupyter contrib nbextension install --user
-RUN jupyter nbextension enable --py widgetsnbextension
-RUN jupyter nbextension enable rubberband/main
-RUN jupyter nbextension enable exercise2/main
+# enable the Nbextensions
+RUN jupyter nbextension enable contrib_nbextensions_help_item/main
+RUN jupyter nbextension enable autosavetime/main
+RUN jupyter nbextension enable codefolding/main
+RUN jupyter nbextension enable code_font_size/code_font_size
+RUN jupyter nbextension enable code_prettify/code_prettify
 RUN jupyter nbextension enable collapsible_headings/main
+RUN jupyter nbextension enable comment-uncomment/main
+RUN jupyter nbextension enable equation-numbering/main
+RUN jupyter nbextension enable execute_time/ExecuteTime 
+RUN jupyter nbextension enable gist_it/main 
+RUN jupyter nbextension enable hide_input/main 
+RUN jupyter nbextension enable spellchecker/main
+RUN jupyter nbextension enable toc2/main
+RUN jupyter nbextension enable toggle_all_line_numbers/main
 
-
-
-# Add jupyterlab extensions here (some might need installing via conda/pip)
-
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN jupyter labextension install jupyter-leaflet
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN jupyter labextension install nbdime-jupyterlab --no-build && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
+    jupyter labextension install jupyterlab_bokeh --no-build && \
+    jupyter labextension install bqplot --no-build && \
+    jupyter labextension install @jupyterlab/vega3-extension --no-build && \
+    jupyter labextension install @jupyterlab/git --no-build && \
+    jupyter labextension install @jupyterlab/hub-extension --no-build && \
+    jupyter labextension install jupyterlab_tensorboard --no-build && \
+    jupyter labextension install jupyterlab-kernelspy --no-build && \
+    jupyter labextension install @jupyterlab/plotly-extension --no-build && \
+    jupyter labextension install jupyterlab-chart-editor --no-build && \
+    jupyter labextension install plotlywidget --no-build && \
+    jupyter labextension install @jupyterlab/latex --no-build && \
+    jupyter labextension install jupyter-matplotlib --no-build && \
+    jupyter labextension install jupyterlab-drawio --no-build && \
+    jupyter labextension install jupyter-leaflet --no-build && \
+    jupyter labextension install qgrid --no-build && \
+    jupyter lab build && \
+        jupyter lab clean && \
+        jlpm cache clean && \
+        npm cache clean --force && \
+        rm -rf $HOME/.node-gyp && \
+        rm -rf $HOME/.local && \
+    fix-permissions $CONDA_DIR $HOME
 
 USER $NB_USER
 
