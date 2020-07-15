@@ -2,9 +2,8 @@ name: uclgeog
 channels:
   - conda-forge
   - defaults
-  - anaconda
 dependencies:
-  - python
+  - python>=3.7
   - conda-build
   - libgdal
   - geopandas
@@ -26,15 +25,12 @@ dependencies:
   - pytest
   - seaborn
   - hdf5
-  - sympy
   - iris
-  - autopep8
   - flake8
   - ipython
   - ipywidgets
   - nbdime
   - xarray
-  - spyder
   - dask
   - black
   - folium
@@ -49,11 +45,6 @@ dependencies:
   - pyephem
   - libnetcdf
   - git
-  - jupyterlab_code_formatter
-  - nbsphinx
   - sphinx
   - ipykernel
-  - importlib_metadata
   - pip
-  - pip:
-    - jupyter_http_over_ws
