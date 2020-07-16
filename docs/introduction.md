@@ -15,4 +15,16 @@ The discussion here is very Python centric, mostly because this is the language 
 
 ## Cloud deployment
 
-A docker container can also be deployed on cloud systems
+A docker container can also be deployed on cloud architectures. While this is a possibility, and allows users to quickly gain access to computational facilities, I will not cover this in this document.
+
+## Organisation
+
+We envisage that you'll want to
+
+1. Select a number of Python packages.
+2. Add some teaching materials (e.g. notebooks).
+3. Possibly some extra Python codes.
+4. Create a docker image.
+5. Push it to some container repository and publish it.
+
+The rest of the document deals with these tasks.

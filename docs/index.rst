@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to UCL Gegraphy Docker Image's documentation!
+Customising UCL Gegraphy Docker Images
 =====================================================
 
 .. toctree::
@@ -11,14 +11,7 @@ Welcome to UCL Gegraphy Docker Image's documentation!
    :caption: Contents:
 
    introduction.md
-   package_selection
-   building_image
+   package_selection.md
+   building_image.md
    adding_extras
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
