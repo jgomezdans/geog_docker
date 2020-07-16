@@ -13,5 +13,5 @@ Customising UCL Gegraphy Docker Images
    introduction.md
    package_selection.md
    building_image.md
-   adding_extras
+   extras.md
 
