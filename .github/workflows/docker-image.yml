@@ -18,12 +18,12 @@ jobs:
       id: vars
       run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
     - name: Build the tagged Docker image
-      run: docker build . --file Dockerfile --tag jgomezdans/geog:${{steps.vars.outputs.tag}}
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/geog:${{steps.vars.outputs.tag}}
     - name: Push the tagged Docker image
-      run: docker push jgomezdans/geog:${{steps.vars.outputs.tag}}
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/geog:${{steps.vars.outputs.tag}}
     - name: Build the latest Docker image
-      run: docker build . --file Dockerfile --tag jgomezdans/geog:latest
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/geog:latest
     - name: Push the latest Docker image
-      run: docker push jgomezdans/geog:latest
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/geog:latest
       
 
