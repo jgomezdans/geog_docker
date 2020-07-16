@@ -57,6 +57,7 @@ ENV JUPYTER_ENABLE_LAB=yes
 RUN jupyter labextension install nbdime-jupyterlab --no-build && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
+    jupyter labextension install @jupyterlab/debugger --no-build && \
     jupyter labextension install jupyter-leaflet --no-build && \
     jupyter lab build && \
         jupyter lab clean && \
