@@ -24,7 +24,6 @@ author = 'J Gomez-Dans, P Lewis, F Yin'
 # The full version, including alpha/beta/rc tags
 release = '0.1'
 
-master_doc = 'index.rst'
 
 # -- General configuration ---------------------------------------------------
 
