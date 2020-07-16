@@ -19,7 +19,7 @@
 
 project = 'UCL Gegraphy Docker Image'
 copyright = '2020, J Gomez-Dans, P Lewis, F Yin'
-author = 'J Gomez-Dans, P Lewis, F Yin'
+author = 'J Gómez-Dans, P Lewis, F Yin'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1'
@@ -34,6 +34,12 @@ master_doc = 'index'
 extensions = ['recommonmark']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+
+source_parsers = {
+   '.md': 'recommonmark.parser.CommonMarkParser',
+}
+
+source_suffix = ['.rst', '.md']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
