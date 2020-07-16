@@ -12,9 +12,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: whoan/docker-build-with-cache-action@master
       with:
-        username: whoan
-        password: "${{ secrets.GITHUB_TOKEN }}"  
-        image_name: geog
+        username: "${{ secrets.DOCKERHUB_USERNAME }}"  
+        password: "${{ secrets.DOCKERHUB_PASSWORD }}"  
+        image_name: geog 
 #    - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag geog:$(date +%s)
       
