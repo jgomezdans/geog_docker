@@ -47,4 +47,6 @@ dependencies:
   - git
   - sphinx
   - ipykernel
+  - xeus-python
+  - ipympl
   - pip
