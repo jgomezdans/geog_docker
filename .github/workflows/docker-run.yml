@@ -14,7 +14,7 @@ jobs:
       with:
         username: whoan
         password: "${{ secrets.GITHUB_TOKEN }}"  
-        image_name: geog:$(date +%s) 
+        image_name: geog 
 #    - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag geog:$(date +%s)
       

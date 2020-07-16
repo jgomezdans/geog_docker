@@ -10,6 +10,10 @@ Welcome to UCL Gegraphy Docker Image's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   introduction.md
+   package_selection
+   building_image
+   adding_extras
 
 
 Indices and tables
