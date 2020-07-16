@@ -53,6 +53,7 @@ RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable toggle_all_line_numbers/main
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV JUPYTER_ENABLE_LAB=yes
 RUN jupyter labextension install nbdime-jupyterlab --no-build && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
