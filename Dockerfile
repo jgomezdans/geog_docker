@@ -65,4 +65,4 @@ RUN jupyter labextension install nbdime-jupyterlab --no-build && \
         rm -rf $HOME/.local && \
     fix-permissions $CONDA_DIR $HOME
 
-
+RUN jupyter trust notebooks/*ipynb 
