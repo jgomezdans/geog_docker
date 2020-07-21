@@ -46,6 +46,7 @@ RUN jupyter nbextension enable hide_input/main
 RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable toggle_all_line_numbers/main
+RUN jupyter nbextension enable exercise2/main
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 ## Uncomment the following line for launching lab by default
