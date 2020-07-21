@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# shouldnt need this, but need to test and confirm
+# these are hacks, now commented out
+#pip install nbgrader
+#conda upgrade -c proflewis uclgeog --yes 
+#conda upgrade -c anaconda jupyter --yes 
+#conda upgrade -c conda-forge jupyter_contrib_nbextensions --yes 
+#conda upgrade -c conda-forge jupyter_contrib_nbextensions --yes 
+
+# for google colab 
+jupyter serverextension enable --py jupyter_http_over_ws
+
+#jupyter contrib nbextension install --user
+# try withiout --user
+jupyter contrib nbextension install
+jupyter nbextension enable --py widgetsnbextension
+jupyter nbextension enable rubberband/main
+jupyter nbextension enable exercise2/main
+jupyter nbextension enable collapsible_headings/main
+jupyter nbextension enable --py --sys-prefix widgetsnbextension
+
+
+jupyter nbextension install --py nbgrader --overwrite
+jupyter nbextension enable --py nbgrader
+jupyter serverextension enable --py nbgrader
+
+# Add jupyterlab extensions here (some might need installing via conda/pip)
+
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install jupyter-leaflet
+
+# Trust notebooks in repo
+jupyter trust *.ipynb
+jupyter trust notebooks/*.ipynb
