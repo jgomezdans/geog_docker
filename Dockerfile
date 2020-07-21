@@ -30,6 +30,8 @@ ENV CONDA_DEFAULT_ENV "${CONDA_ENV}"
 RUN python -m pip install jupyterthemes
 RUN python -m pip install --upgrade jupyterthemes
 RUN python -m pip install jupyter_contrib_nbextensions
+RUN python -m pip install jupyterlab-solutions
+
 RUN jupyter contrib nbextension install --user
 # enable the Nbextensions
 RUN jupyter nbextension enable contrib_nbextensions_help_item/main
@@ -46,6 +48,8 @@ RUN jupyter nbextension enable hide_input/main
 RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable toggle_all_line_numbers/main
+RUN jupyter serverextension enable --py nbgrader
+RUN jupyter serverextension enable jupyterlab_rmotr_solutions
 
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 ENV JUPYTER_ENABLE_LAB=yes
@@ -54,6 +58,7 @@ RUN jupyter labextension install nbdime-jupyterlab --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
     jupyter labextension install @jupyterlab/debugger --no-build && \
     jupyter labextension install jupyter-leaflet --no-build && \
+    jupyter labextension install @rmotr/jupyterlab-solutions --no-build && \
     jupyter lab build && \
         jupyter lab clean && \
         jlpm cache clean && \
@@ -61,7 +66,6 @@ RUN jupyter labextension install nbdime-jupyterlab --no-build && \
         rm -rf "${HOME}/.node-gyp/" && \
         rm -rf "${HOME}/.local/" && \
     fix-permissions "${CONDA_DIR}" "${HOME}"
-
 
 # READ-ONLY notebooks
 RUN mkdir -p "notebooks"

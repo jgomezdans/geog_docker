@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install jupyterlab-solutions
+
 # shouldnt need this, but need to test and confirm
 # these are hacks, now commented out
 #pip install nbgrader
@@ -24,11 +26,14 @@ jupyter nbextension enable --py --sys-prefix widgetsnbextension
 jupyter nbextension install --py nbgrader --overwrite
 jupyter nbextension enable --py nbgrader
 jupyter serverextension enable --py nbgrader
+jupyter serverextension enable jupyterlab_rmotr_solutions
 
 # Add jupyterlab extensions here (some might need installing via conda/pip)
 
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install jupyter-leaflet
+jupyter labextension install @rmotr/jupyterlab-solutions
+
 
 # Trust notebooks in repo
 jupyter trust *.ipynb
