@@ -82,7 +82,7 @@ The second mapping:
 
     -v "${HOME}/OneDrive - University College London/uclgeog:/home/jovyan/OneDrive - University College London/uclgeog"
 
-is a bit of a mouthful only because of the long filename used for OneDrive. It also looks more complicated than it might because it has quotes to dael with the name having spaces.
+is a bit of a mouthful only because of the long filename used for OneDrive. It also looks more complicated than it might because it has quotes to deal with the name having spaces.
 
 The port option:
 
