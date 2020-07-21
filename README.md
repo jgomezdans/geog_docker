@@ -8,14 +8,13 @@ Docker
 
 Use of a Docker container in this way has several advantages for course developers and maintainers::w
 
-
-  * It has only minimal, well-documented setup requirements 
+  * It has only minimal, well-documented setup  
   * It will run on all operating systems (though we should impose some reasonable conditions)
   * We can guarantee the same working environment for all strudents even when they use their own computers
 
 Further:
 
-  * It will atomatically update to deployed containers (is latest tags is ued)
+  * It will automatically update to deployed containers (is latest tags is ued)
   * It can be deployed on cloud resources 
  
 The docker file is created every time you push to the repository, and takes ~15 minutes to build. This is done automatically.
