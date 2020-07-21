@@ -54,11 +54,11 @@ It will have the additional advantage of linking the work on their local compute
 
 We assume below that `OneDrive` is setup on the local computer as:
 
-  ${HOME}/OneDrive - University College London
+   ${HOME}/OneDrive - University College London
 
 This will appear as:
 
-  /home/jovyan/OneDrive - University College London
+   /home/jovyan/OneDrive - University College London
 
 in the container. 
 
