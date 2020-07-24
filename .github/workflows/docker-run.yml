@@ -16,7 +16,8 @@ jobs:
         password: "${{ secrets.DOCKERHUB_PASSWORD }}" 
         context: ./Docker/
         image_name: geog_alpine 
-        push_image_and_stages: false
+        push_git_tag: true
+        push_image_and_stages: docker run geog_alpine:latest  # eg: push only if docker run succeed
     - name: Run test
       run: |
         docker run --rm -d --name test_container -p 8888:8888 geog_alpine
