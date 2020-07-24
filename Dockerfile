@@ -16,9 +16,9 @@ RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
 RUN echo "$(dirname $(dirname $(which conda)))" > ${HOME}/tmp/conda_env.sh
 
 # deactivate if its there
-RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
-    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
-    conda deactivate && conda env remove --prefix uclgeog
+#RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
+#    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+#    conda deactivate && conda env remove --prefix uclgeog
 
 COPY environment.yml "${HOME}"/tmp/
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
