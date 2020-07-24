@@ -1,9 +1,6 @@
 # Choose your desired base image
 FROM jupyter/minimal-notebook:latest
 
-# in case not passed, we derive this from which conda
-ENV CONDA_DIR=`which conda | rev|cut -d '/' -f 3-100|rev`
-
 # name your environment
 ARG conda_env=uclgeog
 
@@ -12,6 +9,10 @@ ARG conda_env=uclgeog
 
 # clean out
 RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
+
+# in case not passed, we derive this from which conda
+RUN echo "export CONDA_DIR=$(dirname $(dirname $(which conda)))" > "${HOME}"/tmp/conda_env.sh
+
 COPY environment.yml "${HOME}"/tmp/
 RUN cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
