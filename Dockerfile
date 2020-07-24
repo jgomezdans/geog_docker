@@ -42,7 +42,7 @@ RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
 # or put in bashrc
 # not sure this is needed?
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
-    USER_HOME = $(eval echo ~$NB_USER) && \
+    USER_HOME=$(eval echo ~$NB_USER) && \
     echo "export PATH=\"$CONDA_DIR/envs/${conda_env}/bin:${PATH}\"" >> ${USER_HOME}/.bashrc
 # rather than
 # ENV PATH="$CONDA_DIR/envs/${conda_env}/bin:${PATH}"
