@@ -22,10 +22,10 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
 # RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
 
 # prepend conda environment to path
-ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
+ENV PATH=$CONDA_DIR/envs/${conda_env}/bin:$PATH
 
 # if you want this environment to be the default one, uncomment the following line:
-ENV CONDA_DEFAULT_ENV ${conda_env}
+ENV CONDA_DEFAULT_ENV=${conda_env}
 
 RUN python -m pip install jupyterthemes
 RUN python -m pip install --upgrade jupyterthemes
