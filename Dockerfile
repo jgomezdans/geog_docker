@@ -1,6 +1,9 @@
 # Choose your desired base image
 FROM jupyter/minimal-notebook:latest
 
+# in case not passed, we derive this from which conda
+ENV CONDA_DIR=$(dirname $(dirname $(which conda)))
+
 # name your environment
 ARG conda_env=uclgeog
 
