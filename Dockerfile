@@ -42,7 +42,7 @@ RUN jupyter nbextension enable code_prettify/code_prettify
 RUN jupyter nbextension enable collapsible_headings/main
 RUN jupyter nbextension enable comment-uncomment/main
 RUN jupyter nbextension enable equation-numbering/main
-RUN jupyter nbextension enable execute_time/ExecuteTime 
+#RUN jupyter nbextension enable execute_time/ExecuteTime 
 RUN jupyter nbextension enable gist_it/main 
 RUN jupyter nbextension enable hide_input/main 
 RUN jupyter nbextension enable spellchecker/main
