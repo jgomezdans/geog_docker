@@ -2,7 +2,7 @@
 FROM jupyter/minimal-notebook:latest
 
 # in case not passed, we derive this from which conda
-ENV CONDA_DIR=$(dirname $(dirname $(which conda)))
+ENV CONDA_DIR=`which conda | rev|cut -d '/' -f 3-100|rev`
 
 # name your environment
 ARG conda_env=uclgeog
