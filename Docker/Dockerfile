@@ -182,5 +182,5 @@ RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable toggle_all_line_numbers/main
 
 RUN mkdir -p $HOME/notebooks
-COPY ../notebooks/* $HOME/notebooks/
-RUN jupyter trust notebooks/*ipynb 
+# COPY ../notebooks/* $HOME/notebooks/
+# RUN jupyter trust notebooks/*ipynb 
