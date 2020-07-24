@@ -1,5 +1,6 @@
 # Choose your desired base image
-FROM jupyter/minimal-notebook:latest
+#FROM jupyter/minimal-notebook:latest
+FROM continuumio/miniconda3
 
 # name your environment
 ARG conda_env=uclgeog
