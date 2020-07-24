@@ -25,11 +25,11 @@ do
   # try CONDA_EXE
   if [ -z "$CONDA_DIR" ]
   then
-      CONDA_DIR=$( conda run env | grep '"${look}"=' | cut -d '=' -f 2)
+      CONDA_DIR=$( conda run env | grep "${look}"= | cut -d '=' -f 2)
   fi
   if [ -z "$CONDA_DIR" ]
   then
-      CONDA_DIR=$( env | grep '"${look}"=' | cut -d '=' -f 2)
+      CONDA_DIR=$( env | grep "${look}"= | cut -d '=' -f 2)
   fi
 done
 
@@ -64,7 +64,7 @@ then
   pwd
   exit
 fi
-source conda.recipe
+$SUDO source conda.recipe
 
 popd
 # tidy
