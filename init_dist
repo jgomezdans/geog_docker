@@ -64,7 +64,7 @@ then
   pwd
   exit
 fi
-$SUDO source conda.recipe
+$SUDO bash conda.recipe
 
 popd
 # tidy
