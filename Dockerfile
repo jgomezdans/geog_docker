@@ -7,8 +7,10 @@ ARG conda_env=uclgeog
 # alternatively, you can comment out the lines above and uncomment those below
 # if you'd prefer to use a YAML file present in the docker build context
 
-COPY environment.yml /home/$NB_USER/tmp/
-RUN cd /home/$NB_USER/tmp/ && \
+# clean out
+RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
+COPY environment.yml "${HOME}"/tmp/
+RUN cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
      conda clean --all -f -y
 
@@ -16,7 +18,7 @@ RUN cd /home/$NB_USER/tmp/ && \
 # create Python 3.x environment and link it to jupyter
 RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=${conda_env} && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $(eval echo ~$NB_USER)
 
 # any additional pip installs can be added by uncommenting the following line
 # RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
