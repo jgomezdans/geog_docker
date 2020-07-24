@@ -97,11 +97,12 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA
     fix-permissions /home/$NB_USER
 
 # Install Tini
-RUN conda install --quiet --yes 'tini=0.18.0' && \
-    conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
-    conda clean --all -f -y && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+# Already installed from Alpine
+#RUN conda install --quiet --yes 'tini=0.18.0' && \
+#    conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
+#    conda clean --all -f -y && \
+#    fix-permissions $CONDA_DIR && \
+#    fix-permissions /home/$NB_USER
 
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
@@ -158,8 +159,11 @@ RUN cd "${HOME}"/tmp/ && \
 RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=${conda_env} && \
     fix-permissions $CONDA_DIR && \
     fix-permissions $(eval echo ~$NB_USER)
-    
+
+ENV PATH=$CONDA_DIR/envs/${conda_env}/bin:$PATH
+
 ENV CONDA_DEFAULT_ENV=${conda_env}
+
 
 RUN python -m pip install jupyterthemes
 RUN python -m pip install --upgrade jupyterthemes
