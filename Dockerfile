@@ -2,6 +2,13 @@
 #FROM jupyter/minimal-notebook:latest
 FROM continuumio/miniconda3
 
+# might as well be consistent with
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
+USER jovyan
+ENV HOME=/home/$USER
+ENV NB_USER=$USER
+ENV NB_GID=100
+
 # name your environment
 ARG conda_env=uclgeog
 
