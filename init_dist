@@ -35,7 +35,7 @@ done
 
 
 # check we have it
-if [ -z "$CONDA_DIR" ]
+if [ ! -z "$CONDA_DIR" ]
 then
       echo "${0}: ENV ERROR"
       echo 'ERROR: Cannot find $CONDA_DIR: I have tried $CONDA_EXE and $CONDA_PREFIX'
