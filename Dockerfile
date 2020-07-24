@@ -26,9 +26,9 @@ RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
      conda clean --all -f -y
      
-RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
-    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
-    conda activate $conda_env
+#RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
+#    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+#    conda activate $conda_env
 
 # create Python 3.x environment and link it to jupyter
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
