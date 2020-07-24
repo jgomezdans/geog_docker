@@ -184,6 +184,8 @@ RUN jupyter nbextension enable hide_input/main
 RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable toc2/main
 RUN jupyter nbextension enable toggle_all_line_numbers/main
+RUN jupyter nbextension enable exercise2/main
+
 
 RUN mkdir -p $HOME/notebooks
 # COPY ../notebooks/* $HOME/notebooks/
