@@ -165,29 +165,29 @@ ENV PATH=$CONDA_DIR/envs/${conda_env}/bin:$PATH
 ENV CONDA_DEFAULT_ENV=${conda_env}
 
 
-RUN python -m pip install jupyterthemes
-RUN python -m pip install --upgrade jupyterthemes
-RUN python -m pip install jupyter_contrib_nbextensions
-RUN jupyter contrib nbextension install --user
+RUN python -m pip install jupyterthemes && \
+    python -m pip install --upgrade jupyterthemes && \
+    python -m pip install jupyter_contrib_nbextensions && \
+    jupyter contrib nbextension install --user
 # enable the Nbextensions
-RUN jupyter nbextension enable contrib_nbextensions_help_item/main
-RUN jupyter nbextension enable autosavetime/main
-RUN jupyter nbextension enable codefolding/main
-RUN jupyter nbextension enable code_font_size/code_font_size
-RUN jupyter nbextension enable code_prettify/code_prettify
-RUN jupyter nbextension enable collapsible_headings/main
-RUN jupyter nbextension enable comment-uncomment/main
-RUN jupyter nbextension enable equation-numbering/main
-RUN jupyter nbextension enable execute_time/ExecuteTime 
-RUN jupyter nbextension enable gist_it/main 
-RUN jupyter nbextension enable hide_input/main 
-RUN jupyter nbextension enable spellchecker/main
-RUN jupyter nbextension enable toc2/main
-RUN jupyter nbextension enable toggle_all_line_numbers/main
-RUN jupyter nbextension enable exercise2/main
+RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
+    jupyter nbextension enable autosavetime/main && \
+    jupyter nbextension enable codefolding/main && \
+    jupyter nbextension enable code_font_size/code_font_size && \
+    jupyter nbextension enable code_prettify/code_prettify && \
+    jupyter nbextension enable collapsible_headings/main && \
+    jupyter nbextension enable comment-uncomment/main && \
+    jupyter nbextension enable equation-numbering/main && \
+    jupyter nbextension enable execute_time/ExecuteTime && \
+    jupyter nbextension enable gist_it/main && \
+    jupyter nbextension enable hide_input/main && \
+    jupyter nbextension enable spellchecker/main && \
+    jupyter nbextension enable toc2/main && \
+    jupyter nbextension enable toggle_all_line_numbers/main && \
+    jupyter nbextension enable exercise2/main
 
 
 RUN mkdir -p $HOME/notebooks
-# COPY ../notebooks/* $HOME/notebooks/
-# RUN jupyter trust notebooks/*ipynb 
+COPY notebooks/* $HOME/notebooks/
+RUN jupyter trust notebooks/*ipynb 
 
