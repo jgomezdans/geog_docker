@@ -19,7 +19,7 @@ jobs:
         push_image_and_stages: false
     - name: Run test
       run: |
-        docker run --rm -d --name test_container -p 8888:8888 alpine_nb
+        docker run --rm -d --name test_container -p 8888:8888 geog_alpine
         docker run --link test_container:test_container waisbrot/wait
         curl --fail http://localhost:8888
 #    - name: Build the Docker image
