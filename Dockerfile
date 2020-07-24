@@ -8,7 +8,7 @@ ARG conda_env=uclgeog
 # if you'd prefer to use a YAML file present in the docker build context
 
 # clean out
-RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
+RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/ && echo "${HOME}/tmp/"
 
 # in case not passed, we derive this from which conda
 # https://vsupalov.com/set-dynamic-environment-variable-during-docker-image-build/
