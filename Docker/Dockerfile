@@ -52,7 +52,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
     HOME=/home/$NB_USER
 
 # Copy a script that we will use to correct permissions after running certain commands
-COPY fix-permissions /usr/local/bin/fix-permissions
+COPY Docker/fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
 
 RUN adduser -s /bin/bash -u $NB_UID -D $NB_USER && \
@@ -129,8 +129,8 @@ ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
-COPY start.sh start-notebook.sh start-singleuser.sh /usr/local/bin/
-COPY jupyter_notebook_config.py /etc/jupyter/
+COPY Docker/start.sh Docker/start-notebook.sh Docker/start-singleuser.sh /usr/local/bin/
+COPY Docker/jupyter_notebook_config.py /etc/jupyter/
 
 # Fix permissions on /etc/jupyter as root
 USER root
@@ -149,7 +149,7 @@ ARG conda_env=uclgeog
 
 # clean out
 RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
-COPY environment.yml "${HOME}"/tmp/
+COPY Docker/environment.yml "${HOME}"/tmp/
 RUN cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
      conda clean --all -f -y
