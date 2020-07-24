@@ -16,7 +16,8 @@ jobs:
       with:
         username: "${{ secrets.DOCKERHUB_USERNAME }}"  
         password: "${{ secrets.DOCKERHUB_PASSWORD }}"  
-        image_name: geog_alpine
+        dockerfile: Docker/Dockerfile
+        image_name: geog_alpine 
         push_git_tag: true
         push_image_and_stages: true
 
