@@ -64,6 +64,10 @@ then
   pwd
   exit
 fi
+# need to pull fix-permissions in case you use it
+wget https://raw.githubusercontent.com/jupyter/docker-stacks/master/base-notebook/fix-permissions
+chmod a+rx fix-permissions
+
 $SUDO bash conda.recipe
 
 popd
