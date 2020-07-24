@@ -18,9 +18,8 @@ COPY environment.yml "${HOME}"/tmp/
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
      cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
-     conda activate $conda_env && \
      conda clean --all -f -y
-
+#      conda activate $conda_env && \
 
 # create Python 3.x environment and link it to jupyter
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
