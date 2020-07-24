@@ -23,7 +23,7 @@ RUN echo "$(dirname $(dirname $(which conda)))" > ${HOME}/tmp/conda_env.sh
 COPY environment.yml "${HOME}"/tmp/
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
      cd "${HOME}"/tmp/ && \
-     conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
+     conda env create -p $CONDA_DIR/envs/$conda_env -f "${HOME}"/tmp/environment.yml && \
      conda clean --all -f -y
      
 #RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
