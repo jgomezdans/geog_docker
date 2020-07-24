@@ -35,16 +35,15 @@ dependencies:
   - black
   - folium
   - jupyter_console
-#  - pandocfilters
+  - pandocfilters
   - nbconvert
   - jupyterlab
   - jupyter
   - nbformat
-#  - pandoc
+  - pandoc
   - nco
   - pyephem
   - libnetcdf
-#  - git
   - sphinx
   - ipykernel
   - xeus-python
