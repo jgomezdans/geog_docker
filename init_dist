@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# get Dockerfile and pull info for postBuild etc
+# to inherit from https://raw.githubusercontent.com/jgomezdans/geog_docker/master/
+
+here=$(pwd)
+cmddir=$(dirname $0)
+base='https://raw.githubusercontent.com/jgomezdans/geog_docker/master/'
+NB_USER="${USER}"
+
+# generate tmp dir to work in
+tmp="${HOME}/tmp.$$"
+rm -rf "${tmp}"
+mkdir -p "${tmp}"
+pushd "${tmp}"
+
+# base the install on this
+wget ${base}/Dockerfile
+
+CONDA_DIR=$(conda run env | grep 'CONDA_DIR=' | cut -d '=' -f 2) 
+
+for look in CONDA_EXE CONDA_PREFIX
+do
+  # probably CONDA_DIR is not there
+  # try CONDA_EXE
+  if [ -z "$CONDA_DIR" ]
+  then
+      CONDA_DIR=$( conda run env | grep '"${look}"=' | cut -d '=' -f 2)
+  fi
+  if [ -z "$CONDA_DIR" ]
+  then
+      CONDA_DIR=$( env | grep '"${look}"=' | cut -d '=' -f 2)
+  fi
+done
+
+
+# check we have it
+if [ -z "$CONDA_DIR" ]
+then
+      echo "${0}: ENV ERROR"
+      echo 'ERROR: Cannot find $CONDA_DIR: I have tried $CONDA_EXE and $CONDA_PREFIX'
+      echo 'from both conda run env and env'
+      echo '    - Check you have anacondsa or miniconda installed'
+      echo '      and put the dist in CONDA_DIR'
+      exit 0
+fi
+
+echo "CONDA_DIR: $CONDA_DIR"
+
+# filter Dockerfile
+grep -v FROM < Dockerfile | sed s'/COPY /cp -rf /g' | sed 's/RUN //' | sed 's/ENV //' | sed 's/ARG //' > conda.recipe
+
+# get this rather than try to mimic the COPY
+wget ${base}/environment.yml
+
+# so as not to mess up
+mkdir -p notebooks
+wget ${base}/notebooks/00-Test_Notebook.ipynb
+mv 00-Test_Notebook.ipynb notebooks
+
+# set a debug break point here
+if [ -z "$DEBUG" ]
+then
+  pwd
+  exit
+fi
+source conda.recipe
+
+popd
+# tidy
+rm -rf ${tmp}
