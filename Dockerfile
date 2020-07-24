@@ -14,12 +14,20 @@ RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
 # https://vsupalov.com/set-dynamic-environment-variable-during-docker-image-build/
 RUN echo "$(dirname $(dirname $(which conda)))" > ${HOME}/tmp/conda_env.sh
 
+# deactivate if its there
+RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
+    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+    conda deactivate && conda env remove --prefix uclgeog
+
 COPY environment.yml "${HOME}"/tmp/
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
      cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
      conda clean --all -f -y
-#      conda activate $conda_env && \
+     
+RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
+    source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+    conda activate $conda_env
 
 # create Python 3.x environment and link it to jupyter
 RUN CONDA_DIR=$(cat ${HOME}/tmp/conda_env.sh) && \
