@@ -7,7 +7,7 @@ FROM continuumio/miniconda3
 ENV NB_USER=$USER
 ENV NB_GID=100
 ENV NB_UID=1000
-RUN userdel $NB_USER && \
+RUN userdel -f $NB_USER && \
     useradd --home /home/$NB_USER -u $NB_UID -g $NB_GID -G 100 -l $NB_USER
 ENV HOME=/home/$USER
 USER jovyan
