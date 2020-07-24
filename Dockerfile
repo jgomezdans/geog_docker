@@ -4,10 +4,13 @@ FROM continuumio/miniconda3
 
 # might as well be consistent with
 # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
-USER jovyan
-ENV HOME=/home/$USER
 ENV NB_USER=$USER
 ENV NB_GID=100
+ENV NB_UID=1000
+RUN userdel $NB_USER && \
+    useradd --home /home/$NB_USER -u $NB_UID -g $NB_GID -G 100 -l $NB_USER
+ENV HOME=/home/$USER
+USER jovyan
 
 # name your environment
 ARG conda_env=uclgeog
