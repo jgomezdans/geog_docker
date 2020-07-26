@@ -15,12 +15,22 @@ jobs:
         username: "${{ secrets.DOCKERHUB_USERNAME }}"  
         password: "${{ secrets.DOCKERHUB_PASSWORD }}" 
         dockerfile: Docker/Dockerfile
-        image_name: geog_alpine 
+        image_name: conda-base
+        build_extra_args: "--target conda-base"
+        push_git_tag: true
+        push_image_and_stages: true
+    - uses: whoan/docker-build-with-cache-action@master
+      with:
+        username: "${{ secrets.DOCKERHUB_USERNAME }}"  
+        password: "${{ secrets.DOCKERHUB_PASSWORD }}" 
+        dockerfile: Docker/Dockerfile
+        image_name: uclgeog-test
+        build_extra_args: "--target uclgeog"
         push_git_tag: true
         push_image_and_stages: true
     - name: Run test
       run: |
-        docker run --rm -d --name test_container -p 8888:8888 jgomezdans/geog_alpine
+        docker run --rm -d --name test_container -p 8888:8888 jgomezdans/uclgeog-test
         docker run --link test_container:test_container waisbrot/wait
         curl --fail http://localhost:8888
 #    - name: Build the Docker image
