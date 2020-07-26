@@ -1,43 +1,38 @@
-FROM alpine:latest
-MAINTAINER J Gomez-Dans <j.gomez-dans@ucl.ac.uk>
+########################################################################
+# The base image derived from Debian buster slim
+########################################################################
 
+FROM ubuntu:focal as conda-base
+
+LABEL maintainer="Jose Gomez-dans <j.gomez-dans@ucl.ac.uk"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
-ARG conda_env=uclgeog
-# Inspired by :
-# * https://github.com/jupyter/docker-stacks
-# * https://github.com/CognitiveScale/alpine-miniconda
-
-USER root
-
-# Install glibc and useful packages
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && apk --update add \
-    bash \
-    git \
-    curl \
-    ca-certificates \
-    bzip2 \
-    unzip \
-    sudo \
-    libstdc++ \
-    glib \
-    libxext \
-    libxrender \
-    tini@testing \
-    && curl "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub" -o /etc/apk/keys/sgerrand.rsa.pub \
-    && curl -L "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-2.23-r3.apk" -o glibc.apk \
-    && apk add glibc.apk \
-    && curl -L "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-bin-2.23-r3.apk" -o glibc-bin.apk \
-    && apk add glibc-bin.apk \
-    && /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc/usr/lib \
-    && rm -rf glibc*apk /var/cache/apk/*
-
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+USER root
+
+# Install all OS dependencies for notebook server that starts but lacks all
+# features (e.g., download as all possible file formats)
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update \
+ && apt-get install -yq --no-install-recommends \
+    wget \
+    bzip2 \
+    ca-certificates \
+    sudo \
+    locales \
+    fonts-liberation \
+    run-one \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+ 
+ ## Latex deps. Apparently, you need all of this!
+ # texlive-xetex texlive-fonts-recommended texlive-generic-recommended
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
 
 # Configure environment
 ENV CONDA_DIR=/opt/conda \
@@ -55,13 +50,20 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 COPY Docker/fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
 
-RUN adduser -s /bin/bash -u $NB_UID -D $NB_USER && \
-    mkdir -p /opt/conda && \
+# Enable prompt color in the skeleton .bashrc before creating the default NB_USER
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
+
+# Create NB_USER wtih name jovyan user with UID=1000 and in the 'users' group
+# and make sure these dirs are writable by the `users` group.
+RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
+    sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
+    sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
+    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
+    mkdir -p $CONDA_DIR && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
     chmod g+w /etc/passwd && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
-    
 
 USER $NB_UID
 WORKDIR $HOME
@@ -70,6 +72,7 @@ ARG PYTHON_VERSION=default
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
+
 
 # Install conda as jovyan and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION=4.8.3 \
@@ -97,12 +100,11 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA
     fix-permissions /home/$NB_USER
 
 # Install Tini
-# Already installed from Alpine
-#RUN conda install --quiet --yes 'tini=0.18.0' && \
-#    conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
-#    conda clean --all -f -y && \
-#    fix-permissions $CONDA_DIR && \
-#    fix-permissions /home/$NB_USER
+RUN conda install --quiet --yes 'tini=0.18.0' && \
+    conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
@@ -110,10 +112,18 @@ RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN conda install --quiet --yes \
+
+# Install Jupyter Notebook, Lab, and Hub
+# Generate a notebook server config
+# Cleanup temporary files
+# Correct permissions
+# Do all this in a single RUN command to avoid duplicating all of the
+# files across image layers when the permissions change
+RUN conda install --quiet --yes --freeze-installed \
+    nomkl \
     'notebook=6.0.3' \
     'jupyterhub=1.1.0' \
-    'jupyterlab=2.1.5' && \
+    'jupyterlab=2.2.0'  && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
@@ -141,18 +151,44 @@ USER $NB_UID
 
 WORKDIR $HOME
 
+########################################################################
+# The course-specific docker file
+########################################################################
+
+FROM conda-base as uclgeog
+
+
+LABEL maintainer="Jose Gomez-dans <j.gomez-dans@ucl.ac.uk"
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
+
+# Fix DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+
 # name your environment
 ARG conda_env=uclgeog
+ENV PATH=$CONDA_DIR/bin:$PATH \
+    HOME=/home/$NB_USER
 
-# alternatively, you can comment out the lines above and uncomment those below
-# if you'd prefer to use a YAML file present in the docker build context
-
-# clean out
 RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER $NB_UID
+
+WORKDIR $HOME
+
+
 COPY Docker/environment.yml "${HOME}"/tmp/
 RUN cd "${HOME}"/tmp/ && \
      conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
-     conda clean --all -f -y
+     conda clean --all -f -y \
+    && rm -rf "${HOME}"/tmp/environment.yml \
+    && find /opt/conda/ -follow -type f -name '*.a' -delete \
+    && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
+    && find /opt/conda/ -follow -type f -name '*.js.map' -delete
+
 
 
 # create Python 3.x environment and link it to jupyter
@@ -168,7 +204,8 @@ ENV CONDA_DEFAULT_ENV=${conda_env}
 RUN python -m pip install jupyterthemes && \
     python -m pip install --upgrade jupyterthemes && \
     python -m pip install jupyter_contrib_nbextensions && \
-    jupyter contrib nbextension install --user
+    jupyter contrib nbextension install --user && \
+    rm -rf ${HOME}/.cache/pip
 # enable the Nbextensions
 RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
     jupyter nbextension enable autosavetime/main && \
@@ -184,10 +221,16 @@ RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
     jupyter nbextension enable spellchecker/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable toggle_all_line_numbers/main && \
-    jupyter nbextension enable exercise2/main
+    jupyter nbextension enable exercise2/main  && \
+    rm -rf ${HOME}/.cache/pip
+    
 
 
 RUN mkdir -p $HOME/notebooks
+RUN fix-permissions $HOME/notebooks/
 COPY notebooks/* $HOME/notebooks/
 RUN jupyter trust notebooks/*ipynb 
 
+
+
+WORKDIR $HOME

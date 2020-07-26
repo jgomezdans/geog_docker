@@ -4,7 +4,7 @@ channels:
   - defaults
 dependencies:
   - python>=3.7
-  - conda-build
+  - nomkl
   - libgdal
   - geopandas
   - rasterio
@@ -25,27 +25,20 @@ dependencies:
   - pytest
   - seaborn
   - hdf5
-  - iris
   - flake8
-  - ipython
   - ipywidgets
-  - nbdime
   - xarray
-  - dask
   - black
   - folium
   - jupyter_console
   - pandocfilters
   - nbconvert
   - jupyterlab
-  - jupyter
-  - nbformat
   - pandoc
-  - nco
   - pyephem
   - libnetcdf
-  - sphinx
   - ipykernel
-  - xeus-python
   - ipympl
   - pip
+  - yapf
+  - autopep8
