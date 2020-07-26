@@ -4,7 +4,13 @@
 
 You probably have one, but if not... Go ahead and get one. 
 
-## Fork the repository
+## Create a copy of our *template* repository
+
+Go to the [github page](https://github.com/UCL-EO/geog_docker) of this repository, and click on the **Use this template** button. This will basically create a new repository under your username, with all the files and stuff that we've put together.
+
+## If you can't create from the template, fork the repository 
+
+Forking is only really recommended if you want to quickly fixe something and feed it back to the main repository, but can also work as a way to publish your own course.
 
 Go to the [github page](https://github.com/UCL-EO/geog_docker) of this repository, and click on the **Fork** icon.
 
@@ -39,11 +45,17 @@ You can do this on the command line using
    git clone  git@github.com:jgomezdans/geog_docker.git
 ```
 
-(change that github address to that of your fork). You can then edit the files locally.
+(change that github address to that of your repository). You can then edit the files locally.
 
 ### Changing packages
 
-You can edit the `environment.yml` file to change the packages you want installed.
+You can edit the `Docker/environment.yml` file to change the packages you want installed.
+
+You may also want to change the names of the Docker images to reflect your course name (e.g. `geog0666`). To do this, you need to change the image name in a couple of places:
+
+- `.github/workflows/docker-run.yml` Change all the occurrences of `uclgeog` to your course name (e.g. `geog0666`). 
+- `.github/workflows/docker-image.yml` Change all the occurrences of `uclgeog` to your course name (e.g. `geog0666`).
+
 
 ### Adding content
 
