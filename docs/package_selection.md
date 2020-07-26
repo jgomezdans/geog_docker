@@ -4,7 +4,7 @@ To add flexibility in terms of adding packages that have complex binary dependen
 
 ## How does it work?
 
-The main way to select packages is to do so by adding them to a so-called *conda environment*. This is defined in a file that sits in the main repository folder called `environment.yml`. It's written using the [YAML](https://yaml.org/) markup language, which basically means it's a text file. The first few lines look like this:
+The main way to select packages is to do so by adding them to a so-called *conda environment*. This is defined in a file that sits in a folder called `Docker`, `environment.yml`. It's written using the [YAML](https://yaml.org/) markup language, which basically means it's a text file. The first few lines look like this:
 
 
 ```yaml
