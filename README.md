@@ -18,4 +18,8 @@ We assume that:
 2. We also assume that all packages can be installed either as [conda](http://docs.conda.io) or [pip](https://pypi.org/project/pip/) packages. 
 3. You have both a [Github](https://github.com) and a [Docker hub](https://hub.docker.com) account.
 4. Most of the teaching material includes notebooks.
-5. You have nerves of steel, laser-focus and substantial amounts of patience
+5. You have nerves of steel, laser-focus and substantial amounts of patience.
+
+## Online documentation
+
+You can also peruse the [online documentation](https://geog-docker.readthedocs.io/).
