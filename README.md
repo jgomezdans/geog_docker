@@ -1,11 +1,11 @@
 <p><img src="https://static.ucl.ac.uk/indigo/images/ucl-logo.svg" align="right" />
 </p>
-
-![GitHub](https://img.shields.io/github/license/jgomezdans/geog_docker?style=for-the-badge)
-![Read the Docs](https://img.shields.io/readthedocs/geog-docker?style=for-the-badge)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/jgomezdans/uclgeog?style=for-the-badge)
-![Docker Pulls](https://img.shields.io/docker/pulls/jgomezdans/uclgeog?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues-raw/jgomezdans/geog_docker?style=for-the-badge)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/jgomezdans/geog_docker/blob/master/LICENSE?style=for-the-badge)
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/jgomezdans/uclgeog)](https://hub.docker.com/r/jgomezdans/uclgeog/tags)
+[![Read the Docs](https://img.shields.io/readthedocs/geog-docker?style=for-the-badge)](https://geog-docker.readthedocs.io/en/latest/)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/jgomezdans/uclgeog?style=for-the-badge)](https://hub.docker.com/r/jgomezdans/uclgeog/tags)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jgomezdans/uclgeog?style=for-the-badge)](https://hub.docker.com/r/jgomezdans/uclgeog/tags)
+[![GitHub issues](https://img.shields.io/github/issues-raw/jgomezdans/geog_docker?style=for-the-badge)](https://github.com/jgomezdans/geog_docker/issues)
 
 # University College London Department of Geography Base Docker image
 
