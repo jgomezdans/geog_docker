@@ -30,7 +30,7 @@ jobs:
         push_image_and_stages: true
     - name: Run test
       run: |
-        docker run --rm -d --name test_container -p 8888:8888 "${{ secrets.DOCKERHUB_PASSWORD }}"/uclgeog-test
+        docker run --rm -d --name test_container -p 8888:8888 "${{ secrets.DOCKERHUB_USERNAME }}"/uclgeog-test
         docker run --link test_container:test_container waisbrot/wait
         curl --fail http://localhost:8888
 #    - name: Build the Docker image
