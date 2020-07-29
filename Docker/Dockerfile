@@ -141,6 +141,7 @@ ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
+RUN mkdir -p /etc/jupyter/
 COPY Docker/start.sh Docker/start-notebook.sh Docker/start-singleuser.sh /usr/local/bin/
 COPY Docker/jupyter_notebook_config.py /etc/jupyter/
 
