@@ -66,6 +66,9 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
+# as root
+RUN mkdir -p /etc/jupyter/
+
 USER $NB_UID
 WORKDIR $HOME
 ARG PYTHON_VERSION=default
@@ -141,7 +144,6 @@ ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
-RUN mkdir -p /etc/jupyter/
 COPY Docker/start.sh Docker/start-notebook.sh Docker/start-singleuser.sh /usr/local/bin/
 COPY Docker/jupyter_notebook_config.py /etc/jupyter/
 
