@@ -131,7 +131,7 @@ RUN conda install --quiet --yes --freeze-installed \
     'jupyterlab=2.2.0'  && \
     conda clean --all -f -y && \
     npm cache clean --force --yes && \
-    jupyter notebook --generate-config && \
+    jupyter notebook --generate-config -y && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf $UHOME/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
