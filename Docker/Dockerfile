@@ -83,8 +83,9 @@ WORKDIR /tmp
 RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "${MINICONDA_MD5} *Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
+    rm Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh 
+    
+RUN echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
     conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
