@@ -8,6 +8,7 @@ LABEL maintainer="Jose Gomez-dans <j.gomez-dans@ucl.ac.uk"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+ARG UHOME=/home/$NB_USER
 
 # Fix DL4006
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -44,7 +45,7 @@ ENV CONDA_DIR=/opt/conda \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
-    HOME=/home/$NB_USER
+    HOME=$UHOME
 
 # Copy a script that we will use to correct permissions after running certain commands
 COPY Docker/fix-permissions /usr/local/bin/fix-permissions
@@ -70,8 +71,8 @@ WORKDIR $HOME
 ARG PYTHON_VERSION=default
 
 # Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
+RUN mkdir $UHOME/work && \
+    fix-permissions $UHOME
 
 
 # Install conda as jovyan and check the md5 sum provided on the download site
@@ -96,16 +97,16 @@ RUN echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
     conda install --quiet --yes pip && \
     conda update --all --quiet --yes && \
     conda clean --all -f -y && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
+    rm -rf $UHOME/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $UHOME
 
 # Install Tini
 RUN conda install --quiet --yes 'tini=0.18.0' && \
     conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $UHOME
 
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
@@ -129,9 +130,9 @@ RUN conda install --quiet --yes --freeze-installed \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
+    rm -rf $UHOME/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $UHOME
 
 EXPOSE 8888
 
@@ -171,14 +172,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # name your environment
 ARG conda_env=uclgeog
 ENV PATH=$CONDA_DIR/bin:$PATH \
-    HOME=/home/$NB_USER
+    HOME=$HOME
 
 RUN rm -rf "${HOME}"/tmp/ && mkdir -p "${HOME}"/tmp/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
 
-WORKDIR $HOME
+WORKDIR "${HOME}"
 
 
 COPY Docker/environment.yml "${HOME}"/tmp/
@@ -195,7 +196,7 @@ RUN cd "${HOME}"/tmp/ && \
 # create Python 3.x environment and link it to jupyter
 RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=${conda_env} && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions $(eval echo ~$NB_USER)
+    fix-permissions "${HOME}"
 
 ENV PATH=$CONDA_DIR/envs/${conda_env}/bin:$PATH
 
@@ -223,13 +224,13 @@ RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable toggle_all_line_numbers/main && \
     jupyter nbextension enable exercise2/main  && \
-    rm -rf ${HOME}/.cache/pip
+    rm -rf "${HOME}"/.cache/pip
     
 
 
-RUN mkdir -p $HOME/notebooks
-RUN fix-permissions $HOME/notebooks/
-COPY notebooks/* $HOME/notebooks/
+RUN mkdir -p "${HOME}"/notebooks
+RUN fix-permissions "${HOME}"/notebooks/
+COPY notebooks/* "${HOME}"/notebooks/
 RUN jupyter trust notebooks/*ipynb 
 
 
