@@ -74,7 +74,7 @@ WORKDIR $HOME
 ARG PYTHON_VERSION=default
 
 # Setup work directory for backward-compatibility
-RUN mkdir $UHOME/work && \
+RUN mkdir -p $UHOME/work && \
     fix-permissions $UHOME
 
 
