@@ -161,7 +161,8 @@ WORKDIR $HOME
 # The course-specific docker file
 ########################################################################
 
-FROM conda-base as uclgeog
+FROM jgomezdans/conda-base as uclgeog
+
 
 
 LABEL maintainer="Jose Gomez-dans <j.gomez-dans@ucl.ac.uk"
