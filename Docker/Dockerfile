@@ -21,6 +21,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     git \
+    levee \
     wget \
     bzip2 \
     ca-certificates \
