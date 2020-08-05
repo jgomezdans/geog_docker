@@ -223,14 +223,15 @@ RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable comment-uncomment/main && \
     jupyter nbextension enable equation-numbering/main && \
-    jupyter nbextension enable execute_time/ExecuteTime && \
+    #jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable gist_it/main && \
     jupyter nbextension enable hide_input/main && \
     jupyter nbextension enable spellchecker/main && \
     jupyter nbextension enable toc2/main && \
     jupyter nbextension enable toggle_all_line_numbers/main && \
     jupyter nbextension enable exercise2/main  && \
-    rm -rf "${HOME}"/.cache/pip
+    rm -rf "${HOME}"/.cache/pip && \
+    echo '{"nbext_hide_incompat": false}' > "${HOME}"/.jupyter/nbconfig/common.json
     
 
 
