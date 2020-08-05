@@ -182,7 +182,7 @@ jobs:
 
 You should also change the Dockerfile to reflect the name of your new course. Literally, this are the two line surrounded by `***`
 
-```
+```docker
 ########################################################################
 # The course-specific docker file
 ########################################################################
