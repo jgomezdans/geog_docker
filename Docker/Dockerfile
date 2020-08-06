@@ -231,8 +231,9 @@ RUN jupyter nbextension enable contrib_nbextensions_help_item/main && \
     jupyter nbextension enable toggle_all_line_numbers/main && \
     jupyter nbextension enable exercise2/main  && \
     rm -rf "${HOME}"/.cache/pip && \
-    echo '{"nbext_hide_incompat": false}' > "${HOME}"/.jupyter/nbconfig/common.json
-    
+    mkdir -p $HOME/.jupyter/nbconfig && \
+         echo '{"nbext_hide_incompat": true}' \
+                  >> $HOME/.jupyter/nbconfig/common.json
 
 
 RUN mkdir -p "${HOME}"/notebooks
