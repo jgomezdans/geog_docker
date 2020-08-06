@@ -29,6 +29,9 @@ RUN apt-get update \
     locales \
     fonts-liberation \
     run-one \
+    texlive-xetex \
+    texlive-fonts-recommended \
+    texlive-plain-generic \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
  
  ## Latex deps. Apparently, you need all of this!
